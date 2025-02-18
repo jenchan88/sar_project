@@ -1,4 +1,6 @@
+README.md
 pyproject.toml
+src/sar_project/__init__.py
 src/sar_project.egg-info/PKG-INFO
 src/sar_project.egg-info/SOURCES.txt
 src/sar_project.egg-info/dependency_links.txt
