@@ -13,7 +13,7 @@ drug_data = pd.read_csv("filtered_drug_treatment_data.csv")
 
 
 drug_inventory = {}
-max_drugs_per_condition = 3
+max_drugs_per_condition = 2
 
 for _, row in drug_data.iterrows():
     condition = row["medical_condition"]
@@ -64,48 +64,55 @@ class MedicalTeamLeaderAgent:
         self.medical_inventory['bandages'] -= 1
         self.medical_inventory['medications'] -= 1
 
-    def get_drug_recommendation(self, condition):
+    def get_drug_recommendation(self, condition, patient_info):
         if condition in self.drug_inventory and self.drug_inventory[condition]:
-            drug = self.drug_inventory[condition][0]  
-            return drug
+            drugs = self.drug_inventory[condition]
+            prompt = f"Patient with {condition} and the following characteristics: {patient_info}. Available drugs: {[drug['drug_name'] for drug in drugs]}. Each drug has these side effects: {[{drug['drug_name']: drug['side_effects']} for drug in drugs]}. Which drug would you recommend and why?"
+            response = self.model.generate_content(prompt)
+            recommendation = response.text
+            
+            recommended_drug_name = next((drug['drug_name'] for drug in drugs if drug['drug_name'] in recommendation), None)
+            
+            if recommended_drug_name:
+                return next(drug for drug in drugs if drug['drug_name'] == recommended_drug_name)
+            else:
+                return random.choice(drugs)  
         return None
-    
-    def process_patient_drugs(self, condition):
+
+
+    def process_patient_drugs(self, condition, patient_info):
         self.total_injuries += 1
         response_time = random.randint(5, 15)
         self.total_response_time += response_time
         
-        drug = self.get_drug_recommendation(condition)
+        drug = self.get_drug_recommendation(condition, patient_info)
         
         if drug:
             drug["supply"] -= 1
+            self.patients_treated += 1
             print(f"Administering {drug['drug_name']} for {condition}.")
             
             if drug["side_effects"]:
                 print(f"Warning: Side effects - {drug['side_effects']}")
-                gemini_response = self.query_gemini_for_side_effects(drug["drug_name"], drug["side_effects"])
+                gemini_response = self.query_gemini_for_side_effects(drug["drug_name"], drug["side_effects"], patient_info)
                 print(f"Gemini AI Suggestion: {gemini_response}")
+            
+            return drug["drug_name"]
         else:
             print(f"No available drug for {condition}. Consult a specialist.")
+            return None
 
-    def query_gemini_for_side_effects(self, drug_name, side_effects):
-        prompt = f"A patient is prescribed {drug_name} but has potential side effects: {side_effects}. How should I proceed?"
+    def query_gemini_for_side_effects(self, drug_name, side_effects, patient_info):
+        prompt = f"A patient with characteristics {patient_info} is prescribed {drug_name} but has potential side effects: {side_effects}. How should we proceed considering the patient's specific situation?"
         response = self.model.generate_content(prompt)
         return response.text
-    
 
     def query_gemini_for_treatment(self, injury_severity):
-        """
-        Use Google Gemini to get treatment suggestions based on the patient's injury severity.
-        """
         prompt = f"Provide treatment recommendations for a {injury_severity} injury."
         response = self.model.generate_content(prompt)  
         return response.text  
 
     def query_gemini_for_hospital_coordination(self, patient_info):
-        """
-        Use Google Gemini to assist in hospital coordination for a severe patient.
-        """
         prompt = f"Should a patient with {patient_info['severity']} injury be sent to the hospital? What transport method should be used?"
         response = self.model.generate_content(prompt) 
         return response.text  
@@ -115,10 +122,13 @@ class MedicalTeamLeaderAgent:
             avg_response_time = self.total_response_time / self.total_injuries
             survival_rate = (self.patients_treated / self.total_injuries) * 100
             avg_diagnosis_accuracy = self.diagnosis_accuracy / self.total_injuries
-
+            
             drug_inventory_summary = {}
             for condition, drugs in self.drug_inventory.items():
-                drug_inventory_summary[condition] = drugs[0]["supply"]  # Supply left of the first drug
+                drug_inventory_summary[condition] = [
+                    {"drug_name": drug["drug_name"], "supply": drug["supply"]}
+                    for drug in drugs
+                ]
 
             report = {
                 "patients_treated": self.patients_treated,
@@ -126,7 +136,7 @@ class MedicalTeamLeaderAgent:
                 "survival_rate_percentage": survival_rate,
                 "avg_diagnosis_accuracy_percentage": avg_diagnosis_accuracy,
                 "remaining_medical_inventory": self.medical_inventory,
-                "remaining_drug_inventory": drug_inventory_summary
+                "remaining_drug_inventory by condition": drug_inventory_summary
             }
             
             return json.dumps(report, indent=4)
@@ -136,22 +146,26 @@ class MedicalTeamLeaderAgent:
 
 if __name__ == "__main__":
     agent = MedicalTeamLeaderAgent()
-    
-    
-    injuriesSeverity = ['minor', 'moderate', 'severe', 'moderate', 'minor']
-    for injury in injuriesSeverity:
-        agent.process_patient_treat_wounds(injury)
-        
-        treatment_response = agent.query_gemini_for_treatment(injury)
-        print(f"Treatment recommendation for {injury} injury: {treatment_response}")
-    
-    severe_patient_info = {'severity': 'severe'}
-    hospital_response = agent.query_gemini_for_hospital_coordination(severe_patient_info)
-    print(f"Hospital coordination response: {hospital_response}")
+
+    # injuriesSeverity = ['minor', 'moderate', 'severe', 'moderate', 'minor']
+    # for injury in injuriesSeverity:
+    #     agent.process_patient_treat_wounds(injury)
+    #     treatment_response = agent.query_gemini_for_treatment(injury)
+    #     print(f"Treatment recommendation for {injury} injury: {treatment_response}")
+
+    # severe_patient_info = {'severity': 'severe'}
+    # hospital_response = agent.query_gemini_for_hospital_coordination(severe_patient_info)
+    # print(f"Hospital coordination response: {hospital_response}")
 
     conditions = ["Hypertension", "Diabetes (Type 2)", "Asthma"]
-    for condition in conditions:
-        agent.process_patient_drugs(condition)
+    patient_infos = [
+        {"age": 65, "gender": "female", "allergies": ["penicillin"], "other_conditions": ["arthritis"]},
+        {"age": 50, "gender": "male", "allergies": [], "other_conditions": ["obesity"]},
+        {"age": 30, "gender": "female", "allergies": ["aspirin"], "other_conditions": []}
+    ]
+    for condition, patient_info in zip(conditions, patient_infos):
+        drug_response = agent.process_patient_drugs(condition, patient_info)
+        print(f"Drug recommendation for {condition}: {drug_response}")
 
     report = agent.generate_report()
     print("Agent Report:")
