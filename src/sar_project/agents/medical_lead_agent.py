@@ -32,7 +32,7 @@ for _, row in drug_data.iterrows():
             drug_inventory[condition].append(drug_info)
 
 print("Medical Conditions:", list(drug_inventory.keys()))
-print(len(drug_inventory))
+#print(len(drug_inventory))
 class MedicalTeamLeaderAgent:
     def __init__(self):
         self.patients_treated_wounds = 0
@@ -98,7 +98,7 @@ class MedicalTeamLeaderAgent:
             if drug["side_effects"]:
                 print(f"Warning: Side effects - {drug['side_effects']}")
                 gemini_response = self.query_gemini_for_side_effects(drug["drug_name"], drug["side_effects"], patient_info)
-                print(f"Gemini AI Suggestion: {gemini_response}")
+                #print(f"Gemini AI Suggestion: {gemini_response}")
             
             return drug["drug_name"]
         else:
@@ -159,12 +159,12 @@ if __name__ == "__main__":
     for injury in injuriesSeverity:
         agent.process_patient_treat_wounds(injury)
         treatment_response = agent.query_gemini_for_treatment(injury)
-        print(f"Treatment recommendation for {injury} injury: {treatment_response}")
+        #print(f"Treatment recommendation for {injury} injury: {treatment_response}")
 
     severe_patient_info = {'severity': 'severe'}
     agent.process_patient_treat_wounds(severe_patient_info['severity'])
-    hospital_response = agent.query_gemini_for_hospital_coordination(severe_patient_info)
-    print(f"Hospital coordination response: {hospital_response}")
+    #hospital_response = agent.query_gemini_for_hospital_coordination(severe_patient_info)
+    #print(f"Hospital coordination response: {hospital_response}")
 
     conditions = ["Hypertension", "Diabetes (Type 2)", "Asthma"]
     patient_infos = [
@@ -174,7 +174,7 @@ if __name__ == "__main__":
     ]
     for condition, patient_info in zip(conditions, patient_infos):
         drug_response = agent.process_patient_drugs(condition, patient_info)
-        print(f"Drug recommendation for {condition}: {drug_response}")
+        #print(f"Drug recommendation for {condition}: {drug_response}")
 
     report = agent.generate_report()
     print("Agent Report:")
