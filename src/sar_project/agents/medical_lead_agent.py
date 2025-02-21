@@ -138,7 +138,7 @@ class MedicalTeamLeaderAgent:
                 ]
 
             report = {
-                "patients_treated": self.patients_treated_wounds,
+                "patients_treated": self.patients_treated_wounds + self.total_medicated_patients,
                 "avg_response_time_minutes": avg_response_time,
                 "survival_rate_percentage": survival_rate,
                 "avg_diagnosis_accuracy_percentage": avg_diagnosis_accuracy,
