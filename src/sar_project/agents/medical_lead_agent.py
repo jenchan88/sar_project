@@ -155,16 +155,16 @@ class MedicalTeamLeaderAgent:
 if __name__ == "__main__":
     agent = MedicalTeamLeaderAgent()
 
-    injuriesSeverity = ['minor', 'moderate', 'severe', 'moderate', 'minor']
-    for injury in injuriesSeverity:
-        agent.process_patient_treat_wounds(injury)
-        treatment_response = agent.query_gemini_for_treatment(injury)
-        #print(f"Treatment recommendation for {injury} injury: {treatment_response}")
+    # injuriesSeverity = ['minor', 'moderate', 'severe', 'moderate', 'minor']
+    # for injury in injuriesSeverity:
+    #     agent.process_patient_treat_wounds(injury)
+    #     treatment_response = agent.query_gemini_for_treatment(injury)
+    #     #print(f"Treatment recommendation for {injury} injury: {treatment_response}")
 
     severe_patient_info = {'severity': 'severe'}
-    agent.process_patient_treat_wounds(severe_patient_info['severity'])
-    #hospital_response = agent.query_gemini_for_hospital_coordination(severe_patient_info)
-    #print(f"Hospital coordination response: {hospital_response}")
+    agent.process_patient_treat_wounds('severere')
+    hospital_response = agent.query_gemini_for_hospital_coordination(severe_patient_info)
+    print(f"Hospital coordination response: {hospital_response}")
 
     conditions = ["Hypertension", "Diabetes (Type 2)", "Asthma"]
     patient_infos = [
