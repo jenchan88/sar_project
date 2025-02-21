@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch
 from medical_lead_agent import MedicalTeamLeaderAgent, drug_inventory
+import json
 
 class TestMedicalTeamLeaderAgent(unittest.TestCase):
 
@@ -8,7 +9,7 @@ class TestMedicalTeamLeaderAgent(unittest.TestCase):
         self.agent = MedicalTeamLeaderAgent()
 
     def test_init(self):
-        self.assertEqual(self.agent.patients_treated, 0)
+        self.assertEqual(self.agent.patients_treated_wounds, 0)
         self.assertEqual(self.agent.total_response_time, 0)
         self.assertEqual(self.agent.total_injuries, 0)
         self.assertEqual(self.agent.patient_survival_rate, 0)
@@ -18,22 +19,19 @@ class TestMedicalTeamLeaderAgent(unittest.TestCase):
         self.assertEqual(self.agent.drug_inventory, drug_inventory)
 
     def test_process_patient_treat_wounds_01(self):
-        initial_patients = self.agent.patients_treated
+        initial_patients = self.agent.patients_treated_wounds
         initial_injuries = self.agent.total_injuries
         initial_bandages = self.agent.medical_inventory['bandages']
-        initial_medications = self.agent.medical_inventory['medications']
-
         self.agent.process_patient_treat_wounds('minor')
 
         self.assertEqual(self.agent.total_injuries, initial_injuries + 1)
         self.assertGreater(self.agent.total_response_time, 0)
         self.assertLess(self.agent.medical_inventory['bandages'], initial_bandages)
-        self.assertLess(self.agent.medical_inventory['medications'], initial_medications)
-        self.assertGreaterEqual(self.agent.patients_treated, initial_patients)
+        self.assertGreaterEqual(self.agent.patients_treated_wounds, initial_patients)
 
 
     def test_generate_report(self):
-        self.agent.patients_treated = 5
+        self.agent.patients_treated_wounds = 5
         self.agent.total_response_time = 50
         self.agent.total_injuries = 10
         self.agent.diagnosis_accuracy = 450
@@ -55,19 +53,19 @@ class TestMedicalTeamLeaderAgent(unittest.TestCase):
 
     @patch('random.random', return_value=0.9) 
     def test_process_patient_treat_wounds_minor(self, mock_random):
-        initial_treated = self.agent.patients_treated
+        initial_treated = self.agent.patients_treated_wounds
         self.agent.process_patient_treat_wounds("minor")
-        self.assertEqual(self.agent.patients_treated, initial_treated + 1)
+        self.assertEqual(self.agent.patients_treated_wounds, initial_treated + 1)
 
     def test_process_patient_treat_wounds_moderate(self):
-        initial_treated = self.agent.patients_treated
+        initial_treated = self.agent.patients_treated_wounds
         self.agent.process_patient_treat_wounds("moderate")
-        self.assertLessEqual(self.agent.patients_treated, initial_treated + 1)
+        self.assertLessEqual(self.agent.patients_treated_wounds, initial_treated + 1)
 
     def test_process_patient_treat_wounds_severe(self):
-        initial_treated = self.agent.patients_treated
+        initial_treated = self.agent.patients_treated_wounds
         self.agent.process_patient_treat_wounds("severe")
-        self.assertLessEqual(self.agent.patients_treated, initial_treated + 1)
+        self.assertLessEqual(self.agent.patients_treated_wounds, initial_treated + 1)
 
     def test_get_drug_recommendation_valid_condition(self):
         condition = "Hypertension"
@@ -131,7 +129,6 @@ class TestMedicalTeamLeaderAgent(unittest.TestCase):
         self.assertIn("avg_diagnosis_accuracy_percentage", report)
         self.assertIn("remaining_medical_inventory", report)
         self.assertIn("remaining_drug_inventory by condition", report)
-
 
 if __name__ == '__main__':
     unittest.main()

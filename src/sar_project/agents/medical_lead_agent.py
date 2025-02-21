@@ -21,7 +21,7 @@ for _, row in drug_data.iterrows():
         "drug_name": row["drug_name"],
         "generic_name": row["generic_name"],
         "side_effects": row["side_effects"],
-        "supply": 10  
+        "supply": 3  
     }
 
     if condition not in drug_inventory:
@@ -35,19 +35,20 @@ print("Medical Conditions:", list(drug_inventory.keys()))
 print(len(drug_inventory))
 class MedicalTeamLeaderAgent:
     def __init__(self):
-        self.patients_treated = 0
+        self.patients_treated_wounds = 0
         self.total_response_time = 0
         self.total_injuries = 0
         self.patient_survival_rate = 0
         self.diagnosis_accuracy = 0
+        self.total_medicated_patients = 0
         self.medical_inventory = {
             'bandages': 100,
-            'medications': 50,
             'surgical_kits': 10,
             'IV_fluids': 20
         }
         self.model = genai.GenerativeModel("gemini-pro")  
         self.drug_inventory = drug_inventory
+        self.total_drug_supply = 156
 
     def process_patient_treat_wounds(self, injury_severity):
         self.total_injuries += 1
@@ -56,13 +57,14 @@ class MedicalTeamLeaderAgent:
         
         survival_chance = {'minor': 0.95, 'moderate': 0.85, 'severe': 0.65}
         treatment_outcome = random.random() < survival_chance.get(injury_severity, 0.7)
-        if treatment_outcome:
-            self.patients_treated += 1
         
-        self.diagnosis_accuracy += random.randint(80, 100)  
+        #if patient survives after being treated
+        if treatment_outcome:
+            self.patients_treated_wounds += 1
 
         self.medical_inventory['bandages'] -= 1
-        self.medical_inventory['medications'] -= 1
+        self.medical_inventory['surgical_kits'] -= 1
+        self.medical_inventory['IV_fluids'] -= 1
 
     def get_drug_recommendation(self, condition, patient_info):
         if condition in self.drug_inventory and self.drug_inventory[condition]:
@@ -81,15 +83,16 @@ class MedicalTeamLeaderAgent:
 
 
     def process_patient_drugs(self, condition, patient_info):
-        self.total_injuries += 1
         response_time = random.randint(5, 15)
         self.total_response_time += response_time
         
         drug = self.get_drug_recommendation(condition, patient_info)
+        self.diagnosis_accuracy += random.randint(80, 100)  
         
         if drug:
+            self.total_medicated_patients += 1
+            self.total_drug_supply -= 1
             drug["supply"] -= 1
-            self.patients_treated += 1
             print(f"Administering {drug['drug_name']} for {condition}.")
             
             if drug["side_effects"]:
@@ -118,10 +121,14 @@ class MedicalTeamLeaderAgent:
         return response.text  
 
     def generate_report(self):
-        if self.total_injuries > 0:
-            avg_response_time = self.total_response_time / self.total_injuries
-            survival_rate = (self.patients_treated / self.total_injuries) * 100
-            avg_diagnosis_accuracy = self.diagnosis_accuracy / self.total_injuries
+        # 0 patients medicated
+        avg_diagnosis_accuracy = -1
+        if (self.total_medicated_patients > 0): 
+            avg_diagnosis_accuracy = self.diagnosis_accuracy / self.total_medicated_patients
+
+        if (self.total_injuries > 0) or (self.total_medicated_patients > 0):
+            avg_response_time = self.total_response_time / (self.total_injuries + self.total_medicated_patients)
+            survival_rate = ((self.patients_treated_wounds + self.total_medicated_patients) / (self.total_injuries+self.total_medicated_patients)) * 100
             
             drug_inventory_summary = {}
             for condition, drugs in self.drug_inventory.items():
@@ -131,11 +138,12 @@ class MedicalTeamLeaderAgent:
                 ]
 
             report = {
-                "patients_treated": self.patients_treated,
+                "patients_treated": self.patients_treated_wounds,
                 "avg_response_time_minutes": avg_response_time,
                 "survival_rate_percentage": survival_rate,
                 "avg_diagnosis_accuracy_percentage": avg_diagnosis_accuracy,
                 "remaining_medical_inventory": self.medical_inventory,
+                "remaining_total_drug_supply_count": self.total_drug_supply,
                 "remaining_drug_inventory by condition": drug_inventory_summary
             }
             
@@ -147,15 +155,16 @@ class MedicalTeamLeaderAgent:
 if __name__ == "__main__":
     agent = MedicalTeamLeaderAgent()
 
-    # injuriesSeverity = ['minor', 'moderate', 'severe', 'moderate', 'minor']
-    # for injury in injuriesSeverity:
-    #     agent.process_patient_treat_wounds(injury)
-    #     treatment_response = agent.query_gemini_for_treatment(injury)
-    #     print(f"Treatment recommendation for {injury} injury: {treatment_response}")
+    injuriesSeverity = ['minor', 'moderate', 'severe', 'moderate', 'minor']
+    for injury in injuriesSeverity:
+        agent.process_patient_treat_wounds(injury)
+        treatment_response = agent.query_gemini_for_treatment(injury)
+        print(f"Treatment recommendation for {injury} injury: {treatment_response}")
 
-    # severe_patient_info = {'severity': 'severe'}
-    # hospital_response = agent.query_gemini_for_hospital_coordination(severe_patient_info)
-    # print(f"Hospital coordination response: {hospital_response}")
+    severe_patient_info = {'severity': 'severe'}
+    agent.process_patient_treat_wounds(severe_patient_info['severity'])
+    hospital_response = agent.query_gemini_for_hospital_coordination(severe_patient_info)
+    print(f"Hospital coordination response: {hospital_response}")
 
     conditions = ["Hypertension", "Diabetes (Type 2)", "Asthma"]
     patient_infos = [
