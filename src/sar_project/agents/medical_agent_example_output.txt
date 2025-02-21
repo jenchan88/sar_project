@@ -1,0 +1,307 @@
+Medical Conditions: ['AIDS/HIV', 'Anxiety', 'Asthma', 'Cancer', 'Colds & Flu', 'Constipation', 'Covid 19', 'Depression', 'Diabetes (Type 2)', 'Diarrhea', 'Eczema', 'GERD (Heartburn)', 'Hayfever', 'Hypertension', 'Hypothyroidism', 'Incontinence', 'Insomnia', 'Migraine', 'Osteoarthritis', 'Osteoporosis', 'Pain', 'Psoriasis', 'Rheumatoid Arthritis', 'Seizures', 'Stroke', 'UTI']
+Hospital coordination response: **When to Send a Patient with Severe Injury to the Hospital:**
+
+Yes, any patient with a severe injury should be transported to the hospital immediately. Severe injuries can include:
+
+* Open wounds or fractures
+* Significant bleeding
+* Head injuries
+* Abdominal pain
+* Chest pain
+* Shortness of breath
+
+**Transport Methods:**
+
+The most appropriate transport method depends on the patient's condition and the available resources. Options include:
+
+* **Ambulance (Ground Transport):** This is the most common method, suitable for most severe injuries that are stable enough to be transported by road.
+* **Helicopter (Air Transport):** This is preferred for patients with life-threatening injuries or those who need specialized care not available at nearby hospitals.
+* **Private Vehicle:** If an ambulance or helicopter is not available, a private vehicle may be used as a last resort. However, it's crucial to ensure the patient is properly supported and protected.
+
+**Additional Considerations:**
+
+* **Patient Stability:** Prioritize transporting the most stable patients first unless their injuries are life-threatening.
+* **Triage:** If multiple patients are injured, use triage principles to determine the order of transport based on the severity of their injuries.
+* **Communication:** Inform the receiving hospital of the patient's injuries and any initial treatments provided.
+* **Follow-up:** Ensure the patient is transferred to the appropriate medical facility and receives the necessary care.
+Administering lisinopril for Hypertension.
+Warning: Side effects - hives; severe stomach pain, difficult breathing; swelling of your face, lips, tongue, or throat. You may be more likely to have an allergic reaction if you are African-American. Lisinopril may cause serious side effects. Call your doctor at once if you have: a light-headed feeling, like you might pass out; fever, sore throat; high potassium - nausea, weakness, tingly feeling, chest pain, irregular heartbeats, loss of movement; kidney problems - little or no urination, swelling in your feet or ankles, feeling tired or short of breath; or >liver problems - nausea, upper stomach pain, itching, tired feeling, loss of appetite, dark urine, clay-colored stools, jaundice (yellowing of the skin or eyes). Common side effects of lisinopril may include: headache; dizziness; cough; or chest pain.
+Administering metformin for Diabetes (Type 2).
+Warning: Side effects - hives ; difficult breathing; swelling of your face, lips, tongue, or throat. Some people using this medicine develop lactic acidosis, which can be fatal. Get emergency medical help if you have even mild symptoms such as: unusual muscle pain; feeling cold; trouble breathing; feeling dizzy, light-headed, tired, or very weak; stomach pain, vomiting ; or slow or irregular heart rate. Common metformin side effects may include: low blood sugar; nausea, upset stomach ; or diarrhea .
+Administering Singulair for Asthma.
+Warning: Side effects - hives , blisters, severe itching; difficult breathing; swelling of your face, lips, tongue, or throat. Tell your doctor right away if you have signs of blood vessel inflammation: flu-like symptoms, severe sinus pain, a skin rash, numbness or a "pins and needles" feeling in your arms or legs. Some people using Singulair have had new or worsening mental problems. Stop taking this medicine and call your doctor right away if you have unusual changes in mood or behavior, such as: agitation, aggression, feeling restless or irritable; anxiety , depression, confusion, problems with memory or attention; stuttering, tremors, uncontrolled muscle movements; suicidal thoughts or actions; hallucinations, sleep problems, vivid, dreams, sleep-walking; or compulsive or repetitive behaviors. Common Singulair side effects may include: stomach pain, diarrhea ; fever or other flu symptoms; ear pain or full feeling, trouble hearing; headache ; or cold symptoms such as runny or stuffy nose, sinus pain, cough, sore throat .
+Agent Report:
+{
+    "patients_treated": 0,
+    "avg_response_time_minutes": 11.0,
+    "survival_rate_percentage": 75.0,
+    "avg_diagnosis_accuracy_percentage": 92.66666666666667,
+    "remaining_medical_inventory": {
+        "bandages": 99,
+        "surgical_kits": 9,
+        "IV_fluids": 19
+    },
+    "remaining_total_drug_supply_count": 153,
+    "remaining_drug_inventory by condition": {
+        "AIDS/HIV": [
+            {
+                "drug_name": "Truvada",
+                "supply": 3
+            },
+            {
+                "drug_name": "Biktarvy",
+                "supply": 3
+            }
+        ],
+        "Anxiety": [
+            {
+                "drug_name": "Xanax",
+                "supply": 3
+            },
+            {
+                "drug_name": "clonazepam",
+                "supply": 3
+            }
+        ],
+        "Asthma": [
+            {
+                "drug_name": "Singulair",
+                "supply": 2
+            },
+            {
+                "drug_name": "montelukast",
+                "supply": 3
+            }
+        ],
+        "Cancer": [
+            {
+                "drug_name": "carboplatin",
+                "supply": 3
+            },
+            {
+                "drug_name": "Leukeran",
+                "supply": 3
+            }
+        ],
+        "Colds & Flu": [
+            {
+                "drug_name": "Benadryl",
+                "supply": 3
+            },
+            {
+                "drug_name": "diphenhydramine",
+                "supply": 3
+            }
+        ],
+        "Constipation": [
+            {
+                "drug_name": "docusate",
+                "supply": 3
+            },
+            {
+                "drug_name": "MiraLAX",
+                "supply": 3
+            }
+        ],
+        "Covid 19": [
+            {
+                "drug_name": "ivermectin",
+                "supply": 3
+            },
+            {
+                "drug_name": "remdesivir",
+                "supply": 3
+            }
+        ],
+        "Depression": [
+            {
+                "drug_name": "Zoloft",
+                "supply": 3
+            },
+            {
+                "drug_name": "Prozac",
+                "supply": 3
+            }
+        ],
+        "Diabetes (Type 2)": [
+            {
+                "drug_name": "metformin",
+                "supply": 2
+            },
+            {
+                "drug_name": "Farxiga",
+                "supply": 3
+            }
+        ],
+        "Diarrhea": [
+            {
+                "drug_name": "loperamide",
+                "supply": 3
+            },
+            {
+                "drug_name": "Lomotil",
+                "supply": 3
+            }
+        ],
+        "Eczema": [
+            {
+                "drug_name": "triamcinolone",
+                "supply": 3
+            },
+            {
+                "drug_name": "mometasone",
+                "supply": 3
+            }
+        ],
+        "GERD (Heartburn)": [
+            {
+                "drug_name": "omeprazole",
+                "supply": 3
+            },
+            {
+                "drug_name": "pantoprazole",
+                "supply": 3
+            }
+        ],
+        "Hayfever": [
+            {
+                "drug_name": "Zyrtec",
+                "supply": 3
+            },
+            {
+                "drug_name": "cetirizine",
+                "supply": 3
+            }
+        ],
+        "Hypertension": [
+            {
+                "drug_name": "lisinopril",
+                "supply": 2
+            },
+            {
+                "drug_name": "losartan",
+                "supply": 3
+            }
+        ],
+        "Hypothyroidism": [
+            {
+                "drug_name": "levothyroxine",
+                "supply": 3
+            },
+            {
+                "drug_name": "Synthroid",
+                "supply": 3
+            }
+        ],
+        "Incontinence": [
+            {
+                "drug_name": "oxybutynin",
+                "supply": 3
+            },
+            {
+                "drug_name": "Myrbetriq",
+                "supply": 3
+            }
+        ],
+        "Insomnia": [
+            {
+                "drug_name": "Ambien",
+                "supply": 3
+            },
+            {
+                "drug_name": "zolpidem",
+                "supply": 3
+            }
+        ],
+        "Migraine": [
+            {
+                "drug_name": "sumatriptan",
+                "supply": 3
+            },
+            {
+                "drug_name": "Imitrex",
+                "supply": 3
+            }
+        ],
+        "Osteoarthritis": [
+            {
+                "drug_name": "meloxicam",
+                "supply": 3
+            },
+            {
+                "drug_name": "Celebrex",
+                "supply": 3
+            }
+        ],
+        "Osteoporosis": [
+            {
+                "drug_name": "alendronate",
+                "supply": 3
+            },
+            {
+                "drug_name": "Prolia",
+                "supply": 3
+            }
+        ],
+        "Pain": [
+            {
+                "drug_name": "oxycodone",
+                "supply": 3
+            },
+            {
+                "drug_name": "acetaminophen",
+                "supply": 3
+            }
+        ],
+        "Psoriasis": [
+            {
+                "drug_name": "Humira",
+                "supply": 3
+            },
+            {
+                "drug_name": "Stelara",
+                "supply": 3
+            }
+        ],
+        "Rheumatoid Arthritis": [
+            {
+                "drug_name": "Enbrel",
+                "supply": 3
+            },
+            {
+                "drug_name": "hydroxychloroquine",
+                "supply": 3
+            }
+        ],
+        "Seizures": [
+            {
+                "drug_name": "Keppra",
+                "supply": 3
+            },
+            {
+                "drug_name": "Diastat",
+                "supply": 3
+            }
+        ],
+        "Stroke": [
+            {
+                "drug_name": "Plavix",
+                "supply": 3
+            },
+            {
+                "drug_name": "clopidogrel",
+                "supply": 3
+            }
+        ],
+        "UTI": [
+            {
+                "drug_name": "nitrofurantoin",
+                "supply": 3
+            },
+            {
+                "drug_name": "Macrobid",
+                "supply": 3
+            }
+        ]
+    }
+}
