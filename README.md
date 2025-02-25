@@ -81,3 +81,14 @@ The agent uses a CSV file named "filtered_drug_treatment_data.csv" to manage dru
     patient_info = {"age": 65, "gender": "female", "allergies": ["penicillin"], "other_conditions": ["arthritis"]}
     drug = self.agent.get_drug_recommendation(condition, patient_info)
 
+### Generate a report
+    from medical_lead_agent import MedicalTeamLeaderAgent
+
+### Process some patients and generate a report
+    agent.process_patient_treat_wounds('minor')
+    agent.process_patient_treat_wounds('severe')
+    agent.process_patient_drugs("Hypertension", {"age": 65, "gender": "female", "allergies": ["penicillin"], "other_conditions": ["arthritis"]})
+    report = agent.generate_report()
+    print("Agent Report:")
+    print(report)
+
