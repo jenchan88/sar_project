@@ -47,3 +47,26 @@ generate_report()
 
     Produces a JSON report summarizing the agent's performance and inventory status
 
+## Data Management
+
+The agent uses a CSV file named "filtered_drug_treatment_data.csv" to manage drug data. This file contains information about various drugs, including names, medical conditions they treat, and side effects. The data from this file is used to populate the agent's drug inventory.
+
+## Requirements
+
+    Python 3.x
+
+    Google Generative AI library
+
+    pandas
+    
+    dotenv
+
+## Installation
+
+    Clone the repository
+
+    Install required packages: pip install google-generativeai pandas python-dotenv
+
+    Set up your Google API key in a .env file
+
+    Ensure the "filtered_drug_treatment_data.csv" file is present in the project directory
