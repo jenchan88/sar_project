@@ -1,7 +1,7 @@
-#Medical Team Leader Agent
+# Medical Team Leader Agent
 
 The Medical Team Leader Agent represents a medical team leader responsible for managing patient treatment, drug administration, and resource allocation in emergency situations.
-##Key Attributes:
+## Key Attributes:
 
     Tracks treated patients, response times, and survival rates
 
@@ -11,7 +11,7 @@ The Medical Team Leader Agent represents a medical team leader responsible for m
 
     Utilizes Google's Generative AI for decision support
 
-##Main Functions:
+## Main Functions:
 
 process_patient_treat_wounds(injury_severity)
 
