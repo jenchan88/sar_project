@@ -1,14 +1,49 @@
 #Medical Team Leader Agent
-This is an implementation of Medical Team Leader agent that assists in treating wounds, administering medications, and coordinating patient care using Google's Gemini AI for intelligent decision-making.
 
-##Features
-- Simulates a medical team leader handling patient injuries and medication.
-- Uses Google Gemini AI to provide:
-  - Tailored medication recommendations based on patient info
-  - Treatment advice for different levels of injury severity
-  - Hospital coordination for severe cases
-- Manages a medication and medical supply inventory including bandages, IV fluids, and medications.
-- Tracks key metrics such as survival rate, response time, and diagnosis accuracy
-- Generates a list of conditions treated by the agent, transport methods for patients with varying injury severity, medication administered to patients along with side effects,
-  and a json summary tracking key metrics like response time, number of treated patients, and remaining medication inventory by condition.
-  Reference medical_agent_example_output.txt for sample output.
+The Medical Team Leader Agent represents a medical team leader responsible for managing patient treatment, drug administration, and resource allocation in emergency situations.
+##Key Attributes:
+
+    Tracks treated patients, response times, and survival rates
+
+    Manages medical inventory (bandages, surgical kits, IV fluids)
+
+    Maintains a drug inventory for various medical conditions
+
+    Utilizes Google's Generative AI for decision support
+
+##Main Functions:
+
+process_patient_treat_wounds(injury_severity)
+
+    Simulates treating a patient's wounds based on injury severity
+
+    Updates medical inventory and patient statistics
+
+get_drug_recommendation(condition, patient_info)
+
+    Uses AI to recommend a drug for a given medical condition and patient information
+
+    Considers available drugs and their side effects
+
+process_patient_drugs(condition, patient_info)
+
+    Administers drugs to patients based on their condition
+
+    Updates drug inventory and patient statistics
+
+query_gemini_for_side_effects(drug_name, side_effects, patient_info)
+
+    Consults AI for guidance on handling potential drug side effects
+
+query_gemini_for_treatment(injury_severity)
+
+    Requests AI-generated treatment recommendations for injuries
+
+query_gemini_for_hospital_coordination(patient_info)
+
+    Seeks AI advice on hospital transfer decisions
+
+generate_report()
+
+    Produces a JSON report summarizing the agent's performance and inventory status
+
