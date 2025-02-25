@@ -70,3 +70,14 @@ The agent uses a CSV file named "filtered_drug_treatment_data.csv" to manage dru
     Set up your Google API key in a .env file
 
     Ensure the "filtered_drug_treatment_data.csv" file is present in the project directory
+
+## Example Usage
+### Initialize the agent
+    from medical_lead_agent import MedicalTeamLeaderAgent
+    agent = MedicalTeamLeaderAgent()
+
+### Obtain medication recommendation based on patient's condition
+    condition = "Hypertension"
+    patient_info = {"age": 65, "gender": "female", "allergies": ["penicillin"], "other_conditions": ["arthritis"]}
+    drug = self.agent.get_drug_recommendation(condition, patient_info)
+
