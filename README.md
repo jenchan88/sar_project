@@ -38,37 +38,37 @@ The agent uses a CSV file named "filtered_drug_treatment_data.csv" to manage dru
 
 ## Main Functions:
 
-process_patient_treat_wounds(injury_severity)
+### process_patient_treat_wounds(injury_severity)
 
     Simulates treating a patient's wounds based on injury severity
 
     Updates medical inventory and patient statistics
 
-get_drug_recommendation(condition, patient_info)
+### get_drug_recommendation(condition, patient_info)
 
     Uses AI to recommend a drug for a given medical condition and patient information
 
     Considers available drugs and their side effects
 
-process_patient_drugs(condition, patient_info)
+### process_patient_drugs(condition, patient_info)
 
     Administers drugs to patients based on their condition
 
     Updates drug inventory and patient statistics
 
-query_gemini_for_side_effects(drug_name, side_effects, patient_info)
+### query_gemini_for_side_effects(drug_name, side_effects, patient_info)
 
     Consults AI for guidance on handling potential drug side effects
 
-query_gemini_for_treatment(injury_severity)
+### query_gemini_for_treatment(injury_severity)
 
     Requests AI-generated treatment recommendations for injuries
 
-query_gemini_for_hospital_coordination(patient_info)
+### query_gemini_for_hospital_coordination(patient_info)
 
     Seeks AI advice on hospital transfer decisions
 
-generate_report()
+### generate_report()
 
     Produces a JSON report summarizing the agent's performance and inventory status
 
