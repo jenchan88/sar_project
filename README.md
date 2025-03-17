@@ -115,3 +115,13 @@ As I developed the Medical Team Leader Agent, my goal was to create a system tha
 One of the primary insights was the importance of scalability and reliability. The feedback highlighted issues with API model availability and quota limits, which underscored the need for robust error handling and the use of supported models. This was a crucial lesson because it emphasized that even with a well-designed system, external factors like API limitations can significantly impact performance. To address this, I implemented retry logic and ensured that the system uses models that are compatible with the current API version.
 
 Another key insight was the value of transparency and tracking. The suggestion to assign unique patient IDs and implement low stock alerts for medical supplies resonated with my intention to create a system that could monitor and manage resources effectively. By integrating these features, I enhanced the system's ability to track patient treatments and inventory levels, making it more transparent and easier to manage.
+
+## Modifications
+Enhanced Reliability and Scalability: 
+Updated the code to use supported models and implemented retry logic to handle transient errors and quota exhaustion. 
+This not only improved the system's reliability but also ensured that it could scale more effectively.
+
+Improved Transparency and Tracking: 
+Introduced a patient ID system to track treatments more effectively and implemented low stock alerts for medical supplies. 
+This enhanced the system's ability to monitor and manage resources, aligning with my original goal of creating an efficient and effective medical resource management system.
+
