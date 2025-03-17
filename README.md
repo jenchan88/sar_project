@@ -1,124 +1,110 @@
-# Search and Rescue (SAR) Agent Framework - CSC 581
+# Medical Team Leader Agent
 
-## Introduction
+The Medical Team Leader Agent represents a medical team leader responsible for managing patient treatment, drug administration, and resource allocation in emergency situations.
 
-This framework is for CSC 581 students to develop intelligent agents supporting the AI4S&R project. Students can create specialized agents for various SAR roles such as those listed in this spreadsheet:
+## Requirements
 
-https://docs.google.com/spreadsheets/d/1QZK5HAdDC-_XNui6S0JZTbJH5_PbYJTp8_gyhXmz8Ek/edit?usp=sharing
-https://docs.google.com/spreadsheets/d/11rBV9CbKNeQbWbaks8TF6GO7WcSUDS_-hAoH75UEkgQ/edit?usp=sharing
+    Python 3.x
 
-Each student or team will choose a specific role within the SAR ecosystem and implement an agent that provides decision support and automation for that role.
+    Google Generative AI library
 
-## How to Submit
-Please submit a link to your clone of the repository to Canvas. 
+    pandas
+    
+    dotenv
 
-## Prerequisites
+## Installation
 
-- Python 3.8 or higher
-- pyenv (recommended for Python version management)
-- pip (for dependency management)
+    Clone the repository
 
-## Setup and Installation
+    Install required packages: pip install google-generativeai pandas python-dotenv
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd sar-project
-```
+    Set up your Google API key in a .env file
 
-2. Set up Python environment:
-```bash
-# Using pyenv (recommended)
-pyenv install 3.9.6  # or your preferred version
-pyenv local 3.9.6
+    Ensure the "filtered_drug_treatment_data.csv" file is present in the project directory
 
-# Create and activate virtual environment
-python -m venv .venv
-source .venv/bin/activate  # On Unix/macOS
-# or
-.venv\Scripts\activate     # On Windows
-```
+## Data Management
 
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-pip install -e .
-```
+The agent uses a CSV file named "filtered_drug_treatment_data.csv" to manage drug data. This file contains information about various drugs, including names, medical conditions they treat, and side effects. The data from this file is used to populate the agent's drug inventory.
 
-4. Configure environment variables:
+## Key Attributes:
 
-#### OpenAI:
-- Obtain required API keys:
-  1. OpenAI API key: Sign up at https://platform.openai.com/signup
-- Update your `.env` file with the following:
-    ```
-    OPENAI_API_KEY=your_openai_api_key_here
-    ```
-#### Google Gemini:
-- Obtain required API keys:
-  1. ``` pip install google-generativeai ```
-  2. ``` import google.generativeai as genai ```
-  3. Google Gemini API Key: Obtain at https://aistudio.google.com/apikey
-- Configure with the following:
-  ```
-  genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-  ```
+    Tracks treated patients, response times, and survival rates
 
-Make sure to keep your `.env` file private and never commit it to version control.
+    Manages medical inventory (bandages, surgical kits, IV fluids)
 
-## Project Structure
+    Maintains a drug inventory for various medical conditions
 
-```
-sar-project/
-├── src/
-│   └── sar_project/         # Main package directory
-│       └── agents/          # Agent implementations
-│       └── config/          # Configuration and settings
-│       └── knowledge/       # Knowledge base implementations
-├── tests/                   # Test directory
-├── pyproject.toml           # Project metadata and build configuration
-├── requirements.txt         # Project dependencies
-└── .env                     # Environment configuration
-```
+    Utilizes Google's Generative AI for decision support
 
-## Development
+## Main Functions:
 
-This project follows modern Python development practices:
+### process_patient_treat_wounds(injury_severity)
 
-1. Source code is organized in the `src/sar_project` layout
-2. Use `pip install -e .` for development installation
-3. Run tests with `pytest tests/`
-4. Follow the existing code style and structure
-5. Make sure to update requirements.txt when adding dependencies
+    Simulates treating a patient's wounds based on injury severity
 
+    Updates medical inventory and patient statistics
 
-## FAQ
+### get_drug_recommendation(condition, patient_info)
 
-### Assignment Questions
+    Uses AI to recommend a drug for a given medical condition and patient information
 
-**Q: How do I choose a role for my agent?**
+    Considers available drugs and their side effects
 
-**A:** Review the list of SAR roles above and consider which aspects interest you most. Your agent should provide clear value to SAR operations through automation, decision support, or information processing.
+### process_patient_drugs(condition, patient_info)
 
-**Q: What capabilities should my agent have?**
+    Administers drugs to patients based on their condition
 
-**A:** Your agent should handle tasks relevant to its role such as: data processing, decision making, communication with other agents, and providing actionable information to human operators.
+    Updates drug inventory and patient statistics
 
-**Q: Can I add new dependencies?**
+### query_gemini_for_side_effects(drug_name, side_effects, patient_info)
 
-**A:** Yes, you can add new Python packages to requirements.txt as needed for your implementation.
+    Consults AI for guidance on handling potential drug side effects
 
+### query_gemini_for_treatment(injury_severity)
 
-### Technical Questions
+    Requests AI-generated treatment recommendations for injuries
 
-**Q: Why am I getting API key errors?**
+### query_gemini_for_hospital_coordination(patient_info)
 
-**A:** Ensure you've properly set up your .env file and obtained valid API keys from the services listed above.
+    Seeks AI advice on hospital transfer decisions
 
-**Q: How do I test my agent?**
+### generate_report()
 
-**A:** Use the provided test framework in the tests/ directory. Write tests that verify your agent's core functionality.
+    Produces a JSON report summarizing the agent's performance and inventory status
 
-**Q: Can I use external libraries for my agent?**
+## Example Usage
+### Initialize the agent
+    from medical_lead_agent import MedicalTeamLeaderAgent
+    agent = MedicalTeamLeaderAgent()
 
-**A:** Yes, you can use external libraries as long as they are compatible.
+### Obtain medication recommendation based on patient's condition
+    condition = "Hypertension"
+    patient_info = {"age": 65, "gender": "female", "allergies": ["penicillin"], "other_conditions": ["arthritis"]}
+    drug = self.agent.get_drug_recommendation(condition, patient_info)
+
+### Process some patients and generate a report
+    agent.process_patient_treat_wounds('minor')
+    agent.process_patient_treat_wounds('severe')
+    agent.process_patient_drugs("Hypertension", {"age": 65, "gender": "female", "allergies": ["penicillin"], "other_conditions": ["arthritis"]})
+    report = agent.generate_report()
+    print("Agent Report:")
+    print(report)
+
+### Update medical inventory
+    agent.medical_inventory['bandages'] += 10
+    print(f"Updated bandages inventory: {agent.medical_inventory['bandages']}")
+
+### Check drug inventory for medications that can treat a specific conditon
+    condition = "Asthma"
+    if condition in agent.drug_inventory:
+        print(f"Drug inventory for {condition}:")
+        for drug in agent.drug_inventory[condition]:
+            print(f"- {drug['drug_name']}: {drug['supply']} remaining")
+    else:
+        print(f"No drugs available for {condition}.")
+
+### Coordinate hospital transport
+    severe_patient_info = {'severity': 'severe'}
+    agent.process_patient_treat_wounds('severe')
+    hospital_response = agent.query_gemini_for_hospital_coordination(severe_patient_info)
+    print(f"Hospital coordination response: {hospital_response}")
