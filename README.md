@@ -108,3 +108,6 @@ The agent uses a CSV file named "filtered_drug_treatment_data.csv" to manage dru
     agent.process_patient_treat_wounds('severe')
     hospital_response = agent.query_gemini_for_hospital_coordination(severe_patient_info)
     print(f"Hospital coordination response: {hospital_response}")
+
+## Insights
+    Reflecting on the feedback I received, several key takeaways stood out. First, it became clear that code organization and readability are crucial. The feedback emphasized the importance of breaking down the code into manageable sections, which led me to separate functions for loading drug data and creating the drug inventory. Additionally, I realized that patient tracking and inventory management needed improvement. Assigning unique patient IDs and implementing low stock alerts for medical supplies and drugs were essential steps in enhancing these aspects.
